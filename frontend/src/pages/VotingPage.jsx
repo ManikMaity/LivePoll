@@ -17,6 +17,7 @@ import { makeChartDataObjFromPollData } from "../utils/util";
 import useBookmark from "../hooks/useBookmark";
 import { io } from "socket.io-client";
 import { getPollSelectedOptionData } from "../services/getPollSelectedOptionData";
+import { BACKEND_URL } from "../config/clientConfig";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
 
@@ -28,44 +29,42 @@ function VotingPage() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const s = io("https://livepoll-anjx.onrender.com");
-    // const s = io("http://localhost:3000");
+    const s = io(BACKEND_URL);
     setSocket(s);
-  
+
     s.on("connect", () => {
       console.log("Connected to the server");
       s.emit("joinPoll", pollId);
     });
-  
+
     return () => {
       s.disconnect();
     };
   }, [pollId]);
 
-  
-  
-
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery(["poll", pollId], () => getPollData(pollId), {
-    cacheTime: 10 * 60 * 1000, // 10 minutes
-    staleTime: 20 * 60 * 1000, // 20 minutes
-    onSuccess: (data) => {
-      setPoll(data);
+  const { data, isLoading, isError, refetch } = useQuery(
+    ["poll", pollId],
+    () => getPollData(pollId),
+    {
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 20 * 60 * 1000, // 20 minutes
+      onSuccess: (data) => {
+        setPoll(data);
+      },
     },
-  });
+  );
 
-  useQuery(["selectedOption", pollId], () => getPollSelectedOptionData(pollId), {
-    cacheTime: 10 * 60 * 1000, // 10 minutes
-    staleTime: 20 * 60 * 1000, 
-    onSuccess: (data) => {
-      setSelectedOption(data?.data?.optionId || null);
+  useQuery(
+    ["selectedOption", pollId],
+    () => getPollSelectedOptionData(pollId),
+    {
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 20 * 60 * 1000,
+      onSuccess: (data) => {
+        setSelectedOption(data?.data?.optionId || null);
+      },
     },
-  });
-
+  );
 
   useEffect(() => {
     if (socket) {
@@ -83,7 +82,7 @@ function VotingPage() {
         socket.off("error");
       };
     }
-  }, [socket]); 
+  }, [socket]);
 
   const mutation = useMutation(createVoteService, {
     onSuccess: (data) => {
@@ -95,13 +94,13 @@ function VotingPage() {
     onError: (error) => {
       console.error(error);
       toast.error(
-        error?.response?.data?.message || "An unexpected error occurred"
+        error?.response?.data?.message || "An unexpected error occurred",
       );
     },
   });
 
   const handleOptionSelect = (id) => {
-    if (!selectedOption){
+    if (!selectedOption) {
       setSelectedOption(id);
     }
     mutation.mutate({ pollId, optionId: id });
@@ -121,7 +120,6 @@ function VotingPage() {
 
   const chartData = makeChartDataObjFromPollData(poll);
 
-
   return (
     <div className="bg-base-200 min-h-screen p-6 text-white flex flex-col items-center">
       <div className="w-full flex justify-between max-w-lg">
@@ -138,7 +136,10 @@ function VotingPage() {
         </div>
 
         {/* BookMark Button */}
-        <button className="btn btn-circle btn-neutral" onClick={() => handleBookmark(pollId)}>
+        <button
+          className="btn btn-circle btn-neutral"
+          onClick={() => handleBookmark(pollId)}
+        >
           <FaBookmark />
         </button>
       </div>

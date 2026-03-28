@@ -1,8 +1,8 @@
-import axiosInstance from "../helper/axiosInstance"
+import axiosInstance from "../helper/axiosInstance";
 
 async function getUserPollData() {
-    const responses = await axiosInstance.get("/poll/created");
-    return responses.data.data;
+  const responses = await axiosInstance.get("/poll/created");
+  return responses.data.data;
 }
 
-export default getUserPollData
+export default getUserPollData;

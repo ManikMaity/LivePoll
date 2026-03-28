@@ -12,13 +12,13 @@ function Polls() {
     ["polls", page, limit],
     () => getPollsService(page, limit),
     {
-      cacheTime: 1000 * 60 * 5, 
-      staleTime: 1000 * 60 * 10, 
-    }
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 10,
+    },
   );
 
   return (
-    <div className="container mx-auto p-4 bg-base-200">
+    <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-6">Polls</h1>
       {isSuccess && (
         <div className="flex flex-wrap justify-center gap-6">
