@@ -139,17 +139,19 @@ export const createVoteController = async (req, res) => {
 };
 
 export const addToBookmarkController = async (req, res) => {
-  try{
+  try {
     const reqPollId = req.params.pollId;
     const reqUser = req.user;
-    const {updatedData, message} = await addToBookMarkService(reqPollId, reqUser);
+    const { updatedData, message } = await addToBookMarkService(
+      reqPollId,
+      reqUser,
+    );
     res.json({
       success: true,
       message: message,
-      data : updatedData
-    })
-  }
-  catch (err) {
+      data: updatedData,
+    });
+  } catch (err) {
     console.log(err);
     if (err.statusCode) {
       res.status(err.statusCode).json({
@@ -163,7 +165,7 @@ export const addToBookmarkController = async (req, res) => {
       });
     }
   }
-}
+};
 
 export const getBookmarkPollController = async (req, res) => {
   try {
@@ -174,8 +176,7 @@ export const getBookmarkPollController = async (req, res) => {
       message: "Bookmarked Polls fetched successfully",
       data: data,
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     if (err.statusCode) {
       res.status(err.statusCode).json({
@@ -189,7 +190,7 @@ export const getBookmarkPollController = async (req, res) => {
       });
     }
   }
-}
+};
 
 export const getAllPolls = async (req, res) => {
   try {
@@ -201,8 +202,7 @@ export const getAllPolls = async (req, res) => {
       message: "All Polls fetched successfully",
       data: data,
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     if (err.statusCode) {
       res.status(err.statusCode).json({
@@ -216,4 +216,4 @@ export const getAllPolls = async (req, res) => {
       });
     }
   }
-}
+};
