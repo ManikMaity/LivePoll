@@ -19,8 +19,8 @@ LivePoll is an interactive web application designed to simplify the process of c
 
 ## Links
 
-- [Live Website](https://live-poll-wine.vercel.app/) - Loading time may take few seconds initially (free tier).
-- [Backend Routes Doc](https://livepoll-anjx.onrender.com/docs/)
+- [Live Website](https://livepoll.manikmaity.com/) - Loading time may take few seconds initially (free tier).
+- [Backend Routes Doc](https://livepoll-backend.manikmaity.com/docs/)
 
 ## Preview Images
 
@@ -94,7 +94,6 @@ API Communication: `Axios`
    ```
 
 2. Backend Setup
-
    - Navigate to the backend directory:
      ```bash
      cd backend
@@ -105,19 +104,18 @@ API Communication: `Axios`
      ```
    - Create a `.env` file and add the following:
      `env
-    PORT=3000
-    DB_CONNECTION="your mongodb url" 
-    SALT_ROUNDS=6
-    JWT_PRIVATE="your jwt private key"
-    CLIENT_URL="your client url"
-     `
+PORT=3000
+DB_CONNECTION="your mongodb url" 
+SALT_ROUNDS=6
+JWT_PRIVATE="your jwt private key"
+CLIENT_URL="your client url"
+ `
    - Start the server:
      ```bash
      npm run dev
      ```
 
 3. Frontend Setup
-
    - Navigate to the frontend directory:
      ```bash
      cd frontend
@@ -161,6 +159,7 @@ API Communication: `Axios`
 - Open a browser and go to `http://localhost:5173` to access the application.
 
 ## Future Improvements
+
 - Add a search feature to the poll page.
 - Add like feature to the poll.
 - sorting polls using created date and popularity.
